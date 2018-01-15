@@ -31,7 +31,7 @@ public class MyFirst extends TelegramLongPollingBot {
     private static final String TENNIS_COMMAND = "/tennis";
     private static final String CURRENCY_COMMAND = "/currency";
     private static final String START_COMMAND = "/start";
-    private static final String BOT_TOKEN = "498006089:AAHUtC2N5hZx3Fz29LN7E07WcJiL0ptuxP8";
+    private static final String BOT_TOKEN = "YOUR_TOKEN_HERE";
     private static final String BOT_USERNAME = "vtlchbot";
     private static final Map<String, String> DESCRIPTION_EMOJI = new HashMap<String, String>() {{
         put("01", ":sunny:");
