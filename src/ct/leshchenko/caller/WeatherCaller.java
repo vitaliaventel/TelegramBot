@@ -4,28 +4,27 @@ package ct.leshchenko.caller;
  * Created by Vitalii Leshchenko on 09.01.2018.
  */
 
+import ct.leshchenko.config.ConfigManager;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class WeatherCaller {
+public class  WeatherCaller {
 
-    private static final String APPID = "63f6349d53ea4bde06506e4d0f86b820";
+    private Caller caller;
 
-    public String getHTTPWeather(String city) throws Exception {
-        StringBuilder result = new StringBuilder();
-        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APPID;
-        URL obj = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-        connection.setRequestMethod("GET");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        reader.close();
-        return result.toString();
+    public WeatherCaller(){
+
+    }
+
+    public WeatherCaller(Caller caller){
+        this.caller = caller;
+    }
+
+    public String getWeatherByCity(String city)  {
+        return caller.getApiCall(String.format(ConfigManager.getInstance().properties.getProperty("GET_WEATHER_BY_CITY_URL"), city));
     }
 
 }

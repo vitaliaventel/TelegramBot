@@ -2,8 +2,10 @@ package ct.leshchenko.telegram;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vdurmont.emoji.EmojiParser;
+import ct.leshchenko.caller.Caller;
 import ct.leshchenko.caller.PrivatBankCaller;
 import ct.leshchenko.caller.WeatherCaller;
+import ct.leshchenko.config.ConfigManager;
 import ct.leshchenko.entity.CurrencyRate;
 import ct.leshchenko.utils.WeatherUtils;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -21,7 +23,7 @@ import java.util.Map;
 /**
  * Created by Vitalii Leshchenko on 09.01.2018.
  */
-public class MyFirst extends TelegramLongPollingBot {
+public class TryBot extends TelegramLongPollingBot {
 
     /**
      * CONSTANTS
@@ -31,8 +33,6 @@ public class MyFirst extends TelegramLongPollingBot {
     private static final String TENNIS_COMMAND = "/tennis";
     private static final String CURRENCY_COMMAND = "/currency";
     private static final String START_COMMAND = "/start";
-    private static final String BOT_TOKEN = "YOUR_TOKEN_HERE";
-    private static final String BOT_USERNAME = "vtlchbot";
     private static final Map<String, String> DESCRIPTION_EMOJI = new HashMap<String, String>() {{
         put("01", ":sunny:");
         put("02", ":white_sun_behind_cloud:");
@@ -49,14 +49,15 @@ public class MyFirst extends TelegramLongPollingBot {
     private PrivatBankCaller privatBankCaller;
     private Map<Long, LocalDateTime> idWithDate = new HashMap<>();
 
-    public MyFirst() {
-        weatherCaller = new WeatherCaller();
-        privatBankCaller = new PrivatBankCaller();
+    public TryBot() {
+        Caller caller = new Caller();
+        weatherCaller = new WeatherCaller(caller);
+        privatBankCaller = new PrivatBankCaller(caller);
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN;
+        return ConfigManager.getInstance().properties.getProperty("BOT_TOKEN");
     }
 
     @Override
@@ -86,7 +87,7 @@ public class MyFirst extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return BOT_USERNAME;
+        return ConfigManager.getInstance().properties.getProperty("BOT_USERNAME");
     }
 
     /**
@@ -113,7 +114,7 @@ public class MyFirst extends TelegramLongPollingBot {
     private String weatherMessage(String city) {
         String message = "Current weather in " + city + " is ";
         try {
-            String weatherJSON = weatherCaller.getHTTPWeather(city);
+            String weatherJSON = weatherCaller.getWeatherByCity(city);
             message += String.valueOf(getCurrentTemperature(weatherJSON)) + "C \n";
             message += EmojiParser.parseToUnicode("Current state: " + getDescription(weatherJSON) + DESCRIPTION_EMOJI.get(getIcon(weatherJSON)) + "\n");
 
@@ -152,7 +153,7 @@ public class MyFirst extends TelegramLongPollingBot {
             for (CurrencyRate rate : rates) {
                 message += rate.getCurrency() + " <> " + rate.getBaseCurrency() + " is next: buy = " + rate.getBuy() + " , sale = " + rate.getSale() + " \n";
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return message;

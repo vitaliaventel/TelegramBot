@@ -7,18 +7,16 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 /**
  * Created by Vitalii Leshchenko on 09.01.2018.
  */
-public class RunnerMyFirst {
+public class BotRunner {
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botApi = new TelegramBotsApi();
         try {
-            botApi.registerBot(new MyFirst());
+            botApi.registerBot(new TryBot());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
-
     }
 
 }
