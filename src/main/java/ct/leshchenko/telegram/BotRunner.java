@@ -1,8 +1,9 @@
 package ct.leshchenko.telegram;
 
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 
 /**
  * Created by Vitalii Leshchenko on 09.01.2018.

@@ -28,11 +28,9 @@ public class ConfigManager {
 
     private void initProperties(){
         properties = new Properties();
-        InputStream inputStream = null;
 
         try {
-            inputStream = new FileInputStream("src/resources/app.properties");
-            properties.load(inputStream);
+            properties.load(ConfigManager.class.getResourceAsStream("/app.properties"));
 
         } catch (IOException ex) {
             ex.printStackTrace();
