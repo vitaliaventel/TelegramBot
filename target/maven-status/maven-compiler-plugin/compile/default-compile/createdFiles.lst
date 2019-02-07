@@ -1,0 +1,9 @@
+ct\leshchenko\entity\CurrencyRate.class
+ct\leshchenko\telegram\TryBot$1.class
+ct\leshchenko\telegram\TryBot.class
+ct\leshchenko\utils\WeatherUtils.class
+ct\leshchenko\config\ConfigManager.class
+ct\leshchenko\caller\PrivatBankCaller.class
+ct\leshchenko\caller\WeatherCaller.class
+ct\leshchenko\caller\Caller.class
+ct\leshchenko\telegram\BotRunner.class
